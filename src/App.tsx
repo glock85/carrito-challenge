@@ -1,19 +1,31 @@
 import { useState } from "react";
-import { CarritoComponent } from "./components/CarritoComponent";
 import { HeaderComponent } from "./components/HeaderComponent";
-import { ListadoProductosComponent } from "./components/ListadoProductosComponent";
+import { CartComponent, ListProductsComponent } from "./components";
 
 function App() {
-  const [showCarrito, setShowCarrito] = useState(false);
+  const [showCart, setShowCart] = useState(false);
+
+  const handleShowCart = () => {
+    setShowCart(!showCart);
+  };
+
   return (
     <div
       className="min-h-full bg-fixed"
       style={{ backgroundImage: "url(background.webp)" }}
     >
-      <HeaderComponent />
+      <HeaderComponent handleShowCart={handleShowCart} />
       <div className="flex justify-center min-h-full">
         <div className="max-w-lg w-full py-16">
-          {showCarrito ? <CarritoComponent /> : <ListadoProductosComponent />}
+          {showCart ? (
+            <div data-testid="cart-component">
+              <CartComponent handleShowCart={handleShowCart} />
+            </div>
+          ) : (
+            <div data-testid="list-product-card">
+              <ListProductsComponent />
+            </div>
+          )}
         </div>
       </div>
     </div>
